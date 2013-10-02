@@ -217,9 +217,9 @@ pip-log.txt
 ###########
 ## cube
 ###########
-*.sln
-*.vcproj
-*.vcxproj
-*.vcxproj.filters
-*.props
-makefile
+# *.sln
+# *.vcproj
+# *.vcxproj
+# *.vcxproj.filters
+# *.props
+# makefile
