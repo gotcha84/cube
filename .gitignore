@@ -213,3 +213,13 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+###########
+## cube
+###########
+*.sln
+*.vcproj
+*.vcxproj
+*.vcxproj.filters
+*.props
+makefile
