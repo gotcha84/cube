@@ -6,18 +6,20 @@
 using namespace std;
 
 class Vector3 {
-	public:
+	protected:
 		float x, y, z;
 
+	public:
 		// {x=0.0; y=0.0; z=0.0;}
 		Vector3();
 		// {x=x0; y=y0; z=z0;}
-		Vector3(float x0, float y0, float z0);
+		Vector3(float, float, float);
 		
 		// {x=x0; y=y0; z=z0;}
-		void set(float x0, float y0, float z0);
+		void set(float, float, float);
+
 		// index=0 -> x; index=1 -> y; index>=2 -> z
-		float get(int index);
+		float get(int);
 		// get X value
 		float getX();
 		// get Y value
@@ -28,7 +30,7 @@ class Vector3 {
 		//float& overload[](const int i);				---> FIX THIS! <---
 
 		// {x+=a.x; y+=a.y; z+=a.z;}
-		void add(Vector3 &a);
+		void add(Vector3&);
 		// {x=a.x+b.x; y=a.y+b.y; z=a.z+b.z;}
 		void add(Vector3 &a, Vector3 &b);
 		// overload +
