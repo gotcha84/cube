@@ -7,15 +7,15 @@ using namespace std;
 
 class Vector3 {
 	public:
-		float x,y,z;
+		float x, y, z;
 
 		// {x=0.0; y=0.0; z=0.0;}
 		Vector3();
 		// {x=x0; y=y0; z=z0;}
-		Vector3(float x0,float y0,float z0);
+		Vector3(float x0, float y0, float z0);
 		
 		// {x=x0; y=y0; z=z0;}
-		void set(float x0,float y0,float z0);
+		void set(float x0, float y0, float z0);
 		// index=0 -> x; index=1 -> y; index>=2 -> z
 		float get(int index);
 		// get X value
@@ -30,14 +30,14 @@ class Vector3 {
 		// {x+=a.x; y+=a.y; z+=a.z;}
 		void add(Vector3 &a);
 		// {x=a.x+b.x; y=a.y+b.y; z=a.z+b.z;}
-		void add(Vector3 &a,Vector3 &b);
+		void add(Vector3 &a, Vector3 &b);
 		// overload +
 		Vector3 operator+(const Vector3 &other) const;
 
 		// {x-=a.x; y-=a.y; z-=a.z;}
 		void subtract(Vector3 &a);
 		// {x=a.x-b.x; y=a.y-b.y; z=a.z-b.z;}
-		void subtract(Vector3 &a,Vector3 &b);
+		void subtract(Vector3 &a, Vector3 &b);
 		// overload -
 		Vector3 operator-(const Vector3 &other) const;
 
@@ -49,12 +49,12 @@ class Vector3 {
 		// {x*=s; y*=s; z*=s;}
 		void scale(float s);
 		// {x=s*a.x; y=s*a.y; z=s*a.z;}
-		void scale(float s,Vector3 &a);
+		void scale(float s, Vector3 &a);
 
 		// {return x*a.x+y*a.y+z*a.z;}
 		float dot(Vector3 &a);
 		// {x=a.y*b.z-a.z*b.y; y=a.z*b.x-a.x*b.z; z=a.x*b.y-a.y*b.x;}
-		void cross(Vector3 &a,Vector3 &b);
+		void cross(Vector3 &a, Vector3 &b);
 		
 		// {return sqrt(x*x+y*y+z*z);}
 		float magnitude();
