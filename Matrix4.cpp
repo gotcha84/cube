@@ -1,3 +1,4 @@
+
 #include "Matrix4.h"
 
 #include <math.h>
@@ -42,9 +43,16 @@ Matrix4::Matrix4(
 	m[3][3] = m33;
 }
 
+
+
 double* Matrix4::getPointer()
 {
 	return &m[0][0];
+}
+
+double Matrix4::get(int index1, int index2)
+{
+	return m[index1][index2];
 }
 
 void Matrix4::identity()
@@ -58,6 +66,61 @@ void Matrix4::identity()
 		}
 	}
 }
+
+
+void Matrix4::multiply(Matrix4 &a)
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			tmp_sum = 0;
+			for (int x = 0; x < 4; ++x)
+			{
+				tmp_sum+=m[i][x]*a.m[x][j];
+			}
+			m[i][j] = tmp_sum;
+	
+		}
+	}
+}
+
+&Vector4 Matrix4::multiply(Vector4 &a)
+{
+	float tmp_array[4];
+	for (int i = 0; i < 4; ++i)
+	{
+		tmp_sum = 0;
+		for (int j = 0; j < 4; ++j)
+		{
+			tmp_sum+=m[i][j]*a.get(j);			
+	
+		}
+		tmp_array[i] = tmp_sum;
+	}
+	return Vector4(tmp_array[0], tmp_array[1], tmp_array[2], tmp_array[3]);
+}
+// angle in radians
+void Matrix4::rotateX(double angle)
+{
+	m[0][0] = 1;
+	m[0][1] = 0;
+	m[0][2] = 0;
+	m[0][3] = 0;
+	m[1][0] = 0;
+	m[1][1] = cos(angle);
+	m[1][2] = -sin(angle);
+	m[1][3] = 0;
+	m[2][0] = 0;
+	m[2][1] = sin(angle);
+	m[2][2] = cos(angle);
+	m[2][3] = 0;
+	m[3][0] = 0;
+	m[3][1] = 0;
+	m[3][2] = 0;
+	m[3][3] = 1;
+}
+
 
 // angle in radians
 void Matrix4::rotateY(double angle)
@@ -78,4 +141,96 @@ void Matrix4::rotateY(double angle)
 	m[3][1] = 0;
 	m[3][2] = 0;
 	m[3][3] = 1;
+}
+
+// angle in radians
+void Matrix4::rotateZ(double angle)
+{
+	m[0][0] = cos(angle);
+	m[0][1] = -sin(angle);
+	m[0][2] = 0;
+	m[0][3] = 0;
+	m[1][0] = sin(angle);
+	m[1][1] = cos(angle);
+	m[1][2] = 0;
+	m[1][3] = 0;
+	m[2][0] = 0;
+	m[2][1] = 0;
+	m[2][2] = 0;
+	m[2][3] = 0;
+	m[3][0] = 0;
+	m[3][1] = 0;
+	m[3][2] = 0;
+	m[3][3] = 1;
+}
+
+// is this supposed to be 3d or 4d?
+void Matrix4::rotate(Vector3 &a, double angle)
+{
+	a.normalize();
+	
+	m[0][0] = 1+((1-cos(angle))*((a.x*a.x)-1));
+	m[0][1] = (-a.z*sin(angle))+((1-cos(angle))*a.x*a.y);
+	m[0][2] = (-a.y*sin(angle))+((1-cos(angle))*a.x*a.z);
+	m[0][3] = 0;
+	m[1][0] = (-a.z*sin(angle))+((1-cos(angle))*a.x*a.y);
+	m[1][1] = 1+((1-cos(angle))*((a.y*a.y)-1));
+	m[1][2] = (-a.x*sin(angle))+((1-cos(angle))*a.y*a.z);
+	m[1][3] = 0;
+	m[2][0] = (-a.y*sin(angle))+((1-cos(angle))*a.x*a.z);
+	m[2][1] = (-a.x*sin(angle))+((1-cos(angle))*a.y*a.z);
+	m[2][2] = 1+((1-cos(angle))*((a.z*a.z)-1));
+	m[2][3] = 0;
+	m[3][0] = 0;
+	m[3][1] = 0;
+	m[3][2] = 0;
+	m[3][3] = 1;
+
+
+// or is m[3][3] supossed to be 1?
+void Matrix4::scaling(double a, double b, double c, double d)
+{
+
+	m[0][0] = a;
+	m[0][1] = 0;
+	m[0][2] = 0;
+	m[0][3] = 0;
+	m[1][0] = 0;
+	m[1][1] = b;
+	m[1][2] = 0;
+	m[1][3] = 0;
+	m[2][0] = 0;
+	m[2][1] = 0;
+	m[2][2] = c;
+	m[2][3] = 0;
+	m[3][0] = 0;
+	m[3][1] = 0;
+	m[3][2] = 0;
+	m[3][3] = d;
+
+}
+
+//translation
+
+
+//print
+
+void Matrix4::transpose()
+{
+	double tmp[4][4];
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			tmp[i][j] = m[j][i];
+		}
+	}
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = tmp[i][j];
+		}
+	}
+
 }
