@@ -1,6 +1,4 @@
-
 #include "Matrix4.h"
-
 #include <math.h>
 #include <iostream> // to print to stdout
 #include <sstream> // to convert float to string
@@ -74,7 +72,7 @@ void Matrix4::multiply(Matrix4 &a)
 	{
 		for (int j = 0; j < 4; ++j)
 		{
-			tmp_sum = 0;
+			double tmp_sum = 0;
 			for (int x = 0; x < 4; ++x)
 			{
 				tmp_sum+=m[i][x]*a.m[x][j];
@@ -85,21 +83,21 @@ void Matrix4::multiply(Matrix4 &a)
 	}
 }
 
-&Vector4 Matrix4::multiply(Vector4 &a)
-{
-	float tmp_array[4];
-	for (int i = 0; i < 4; ++i)
-	{
-		tmp_sum = 0;
-		for (int j = 0; j < 4; ++j)
-		{
-			tmp_sum+=m[i][j]*a.get(j);			
+//Vector4* Matrix4::multiply(Vector4 &a)
+//{
+	//float tmp_array[4];
+	//for (int i = 0; i < 4; ++i)
+	//{
+		//float tmp_sum = 0;
+		//for (int j = 0; j < 4; ++j)
+		//{
+			//tmp_sum+=m[i][j]*a.get(j);			
 	
-		}
-		tmp_array[i] = tmp_sum;
-	}
-	return Vector4(tmp_array[0], tmp_array[1], tmp_array[2], tmp_array[3]);
-}
+		//}
+		//tmp_array[i] = tmp_sum;
+	//}
+	//return &Vector4(tmp_array[0], tmp_array[1], tmp_array[2], tmp_array[3]);
+//}
 // angle in radians
 void Matrix4::rotateX(double angle)
 {
@@ -188,6 +186,7 @@ void Matrix4::rotate(Vector3 &a, double angle)
 
 
 // or is m[3][3] supossed to be 1?
+}
 void Matrix4::scaling(double a, double b, double c, double d)
 {
 

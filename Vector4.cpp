@@ -95,10 +95,10 @@ float Vector4::getW()
 // overload operator []
 
 void Vector4::add(Vector4 &a) {
-	x+=a.x
-	y+=a.y
-	z+=a.z
-	w+=a.w
+	x+=a.x;
+	y+=a.y;
+	z+=a.z;
+	w+=a.w;
 }
 
 void Vector4::add(Vector4 &a, Vector4 &b) {
@@ -108,7 +108,7 @@ void Vector4::add(Vector4 &a, Vector4 &b) {
 	w = a.w + b.w;
 }
 
-Vector4 operator+(const Vector4 &other) const
+Vector4 Vector4::operator+(const Vector4 &other) const
 {
 	return Vector4(this->x + other.x, this->y + other.y, 
 		this->z + other.z, this->w + other.w);
@@ -130,13 +130,13 @@ void Vector4::subtract(Vector4 &a, Vector4 &b)
 	w = a.w - b.w;
 }
 
-Vector4 operator-(const Vector4 &other) const
+Vector4 Vector4::operator-(const Vector4 &other) const
 {
 	return Vector4(this->x - other.x, this->y - other.y, 
 		this->z - other.z, this->w - other.w);
 }
 
-void dehomogenize() {
+void Vector4::dehomogenize() {
 	if (w != 0.0) {
 		float denom = 1.0/w;
 		x*=denom;
@@ -146,9 +146,13 @@ void dehomogenize() {
 	}
 }
 
-void print(Vector4 &a) {
-	ostringstream ss;
-	ss << "(" << this->x << ", " << this->y << ", " << 
-		this->z << ", " << this->w ")";
-	return ss.str();
+void Vector4::print(Vector4 &a)
+{
+	cout << ("(%f, %f, %f, %f)", a.w, a.x, a.y, a.z);
 }
+
+//void Vector4::print(Vector4 &a) {
+	//ostringstream ss;
+	//ss << "(" << this->x << ", " << this->y << ", " << this->z << ", " << this->w << ")";
+	//return ss.str();
+//}

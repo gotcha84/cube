@@ -6,10 +6,11 @@
 using namespace std;
 
 class Vector3 {
-	protected:
-		float x, y, z;
+	//protected:
+		//float x, y, z;
 
 	public:
+		float x, y, z;
 		// {x=0.0; y=0.0; z=0.0;}
 		Vector3();
 		// {x=x0; y=y0; z=z0;}

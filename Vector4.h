@@ -10,10 +10,12 @@ using namespace std;
 	http://ivl.calit2.net/wiki/images/3/3a/02_TransformationsF13.pdf
 */
 class Vector4 {
-	protected:
-		float x, y, z, w;
+	//protected:
+		//float x, y, z, w;
+
 	
 	public:
+		float x, y, z, w;
 		Vector4();
 		// A constructor with three parameters for point coordinates
 		Vector4(float, float, float);

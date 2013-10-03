@@ -10,10 +10,11 @@ using namespace std;
 
 class Matrix4
 {
-	protected:
-		double m[4][4]; // matrix elements
+	//protected:
+		//double m[4][4]; // matrix elements
 		
 	public:
+		double m[4][4]; // matrix elements
 		// given
 		Matrix4(); // constructor
 		// given
@@ -24,7 +25,7 @@ class Matrix4
 		// return pointer to matrix elements
 		double* getPointer(); // given
 		// 'get(x,y)' function to read any matrix element
-		double& get(int, int);
+		double get(int, int);
 
 		// given
 		// create identity matrix
@@ -32,7 +33,7 @@ class Matrix4
 		// Multiply (matrix-times-matrix)
 		void multiply(Matrix4&);
 		// Multiply (matrix-times-vector)
-		void multiply(Vector4&);
+		//Vector4* multiply(Vector4&);
 	
 		// Make a rotation matrix about the x axis
 		void rotateX(double);
@@ -43,6 +44,7 @@ class Matrix4
 		void rotateZ(double);
 		// Make a rotation matrix about an arbitrary (unit) axis
 		void rotate(Vector3&, double);
+		void scaling(double, double, double, double);
 
 		// Make a non-uniform scaling matrix
 		// Make a translation matrix
