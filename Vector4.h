@@ -55,7 +55,9 @@ class Vector4 {
 		void dehomogenize();
 
 		// Print (display the point's components numerically on the screen)
-		void print(Vector4&);
+		void print();
+		// string representation of components
+		string toString();
 };
 
 #endif

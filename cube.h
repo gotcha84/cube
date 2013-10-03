@@ -5,13 +5,16 @@
 
 class Cube
 {
-  protected:
+	public:
     Matrix4 matrix;                 // model matrix
     double angle;                   // rotation angle [degrees]
-
-  public:
+	
+	public:
     Cube();   // Constructor
     Matrix4& getMatrix();
+		void setMatrix(Matrix4&);
+		double getAngle();
+		void setAngle(double);
     void spin(double);      // spin cube [degrees]
 };
 
@@ -23,7 +26,7 @@ class Window	  // output window related routines
     static void idleCallback(void);
     static void reshapeCallback(int, int);
     static void displayCallback(void);
+		static void processNormalKeys(unsigned char, int, int);
 };
 
 #endif
-

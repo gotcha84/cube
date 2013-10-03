@@ -65,7 +65,7 @@ class Vector3 {
 		void normalize();
 		
 		// print components
-		void print(Vector3 &a);
+		void print();
 		// string representation of components
 		string toString();
 };

@@ -3,6 +3,7 @@
 #include <math.h>
 #include <iostream> // to print to stdout
 #include <sstream> // to convert float to string
+#include <iomanip> // to round floats
 #include <string>
 
 using namespace std;
@@ -155,9 +156,10 @@ void Vector3::normalize()
 	scale(float(1.0)/magnitude());
 }
 	
-void Vector3::print(Vector3 &a)
+void Vector3::print()
 {
-	cout << ("(%f, %f, %f)", a.x, a.y, a.z);
+	cout << setprecision(2) << fixed;
+	cout << ("(%f, %f, %f)", this->x, this->y, this->z);
 }
 
 string Vector3::toString()

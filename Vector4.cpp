@@ -3,6 +3,7 @@
 #include <math.h>
 #include <iostream> // to print to stdout
 #include <sstream> // to convert float to string
+#include <iomanip> // to round floats
 #include <string>
 
 using namespace std;
@@ -146,13 +147,14 @@ void Vector4::dehomogenize() {
 	}
 }
 
-void Vector4::print(Vector4 &a)
+void Vector4::print()
 {
-	cout << ("(%f, %f, %f, %f)", a.w, a.x, a.y, a.z);
+	cout << setprecision(2) << fixed;
+	cout << ("(%f, %f, %f, %f)", this->w, this->x, this->y, this->z);
 }
 
-//void Vector4::print(Vector4 &a) {
-	//ostringstream ss;
-	//ss << "(" << this->x << ", " << this->y << ", " << this->z << ", " << this->w << ")";
-	//return ss.str();
-//}
+string Vector4::toString() {
+	ostringstream ss;
+	ss << "(" << this->x << ", " << this->y << ", " << this->z << ", " << this->w << ")";
+	return ss.str();
+}

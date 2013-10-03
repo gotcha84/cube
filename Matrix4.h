@@ -20,6 +20,7 @@ class Matrix4
 		// given
 		// Constructor with 16 parameters to set the values of the matrix
 		Matrix4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double);
+		Matrix4(Matrix4&);
 		
 		// given
 		// return pointer to matrix elements
@@ -33,7 +34,7 @@ class Matrix4
 		// Multiply (matrix-times-matrix)
 		void multiply(Matrix4&);
 		// Multiply (matrix-times-vector)
-		//Vector4* multiply(Vector4&);
+		Vector4* multiply(Vector4&);
 	
 		// Make a rotation matrix about the x axis
 		void rotateX(double);
@@ -43,14 +44,16 @@ class Matrix4
 		// Make a rotation matrix about the z axis
 		void rotateZ(double);
 		// Make a rotation matrix about an arbitrary (unit) axis
-		void rotate(Vector3&, double);
-		void scaling(double, double, double, double);
+		void rotate(double, Vector3&);
 
 		// Make a non-uniform scaling matrix
+		void scale(double, double, double);
+
 		// Make a translation matrix
-	
+		void translate(double, double, double);
+
 		// Print the matrix (display all 16 matrix components numerically on the screen in a 4x4 array)
-		void print(Matrix4&);
+		void print();
 
 		// Transpose the matrix
 		void transpose();
