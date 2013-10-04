@@ -37,7 +37,7 @@ class Vector4 {
 		float getW();
 		// Overload operator '[]' as alternative to 'get' method
 		// overload [], i=0 -> x; i=1 -> y; i=2 -> z; i>=3 -> w
-		//float& overload[](const int i);				---> FIX THIS! <---
+		float operator[] (const int);
 
 		// Vector addition
 		void add(Vector4&);

@@ -16,6 +16,8 @@ Matrix4::Matrix4()
 			m[i][j] = 0;
 		}
 	}
+
+	m[3][3] = 1;
 }
 
 Matrix4::Matrix4(
@@ -105,112 +107,163 @@ void Matrix4::identity()
 	}
 }
 
-void Matrix4::multiply(Matrix4 &a)
+Matrix4* Matrix4::multiply(Matrix4 &a)
+
 {
+	double n[4][4];
+	double temp_sum;
+
 	for (int i = 0; i < 4; ++i)
 	{
 		for (int j = 0; j < 4; ++j)
 		{
-			double tmp_sum = 0;
+			temp_sum = 0;
 			for (int x = 0; x < 4; ++x)
 			{
-				tmp_sum+=m[i][x]*a.m[x][j];
+				temp_sum+=m[x][j]*a.m[i][x];
 			}
-			m[i][j] = tmp_sum;
-	
+			n[i][j] = temp_sum;
 		}
 	}
+
+	return &Matrix4(
+		n[0][0], n[0][1], n[0][2], n[0][3], 
+		n[1][0], n[1][1], n[1][2], n[1][3], 
+		n[2][0], n[2][1], n[2][2], n[2][3], 
+		n[3][0], n[3][1], n[3][2], n[3][3]
+	);
 }
 
 Vector4* Matrix4::multiply(Vector4 &a)
 {
-	float tmp_array[4];
+	float n[4];
+	float temp_sum;
+
 	for (int i = 0; i < 4; ++i) 
 	{
-		float tmp_sum = 0;
+		temp_sum = 0;
 		for (int j = 0; j < 4; ++j) 
 		{
-			tmp_sum+=m[i][j]*a.get(j);
+			temp_sum+=(float)m[i][j]*a.get(j);
 		}
-		tmp_array[i] = tmp_sum;
+		n[i] = temp_sum;
 	}
-	return &Vector4(tmp_array[0], tmp_array[1], tmp_array[2], tmp_array[3]);
+
+	return &Vector4(n[0], n[1], n[2], n[3]);
 }
 
-// angle in radians
 void Matrix4::rotateX(double angle)
 {
-	// slide 43
-	m[0][0] = 1;
-	m[0][1] = 0;
-	m[0][2] = 0;
-	m[0][3] = 0;
+	Matrix4 n = Matrix4(
+		1, 0, 0, 0, 
+		0, cos(angle), -sin(angle), 0,  
+		0, sin(angle), cos(angle), 0, 
+		0, 0, 0, 1
+	);
 
-	m[1][0] = 0;
-	m[1][1] = cos(angle);
-	m[1][2] = -sin(angle);
-	m[1][3] = 0;
-
-	m[2][0] = 0;
-	m[2][1] = sin(angle);
-	m[2][2] = cos(angle);
-	m[2][3] = 0;
-
-	m[3][0] = 0;
-	m[3][1] = 0;
-	m[3][2] = 0;
-	m[3][3] = 1;
+	Matrix4 *result = n.multiply(*this);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
 }
 
+void Matrix4::rotateCubeX(double angle)
+{
+	Matrix4 n = Matrix4(
+		1, 0, 0, 0, 
+		0, cos(angle), -sin(angle), 0,  
+		0, sin(angle), cos(angle), 0, 
+		0, 0, 0, 1
+	);
 
+	Matrix4 *result = this->multiply(n);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
+}
 // angle in radians
 void Matrix4::rotateY(double angle)
 {
-	// slide 43
-	m[0][0] = cos(angle);
-	m[0][1] = 0;
-	m[0][2] = sin(angle);
-	m[0][3] = 0;
+	Matrix4 n = Matrix4(
+		cos(angle), 0, sin(angle), 0, 
+		0, 1, 0, 0, 
+		-sin(angle), 0, cos(angle), 0, 
+		0, 0, 0, 1
+	);
 
-	m[1][0] = 0;
-	m[1][1] = 1;
-	m[1][2] = 0;
-	m[1][3] = 0;
-
-	m[2][0] = -sin(angle);
-	m[2][1] = 0;
-	m[2][2] = cos(angle);
-	m[2][3] = 0;
-
-	m[3][0] = 0;
-	m[3][1] = 0;
-	m[3][2] = 0;
-	m[3][3] = 1;
+	Matrix4 *result = n.multiply(*this);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
 }
 
-// angle in radians
+void Matrix4::rotateCubeY(double angle)
+{
+	Matrix4 n = Matrix4(
+		cos(angle), 0, sin(angle), 0, 
+		0, 1, 0, 0, 
+		-sin(angle), 0, cos(angle), 0, 
+		0, 0, 0, 1
+	);
+
+	Matrix4 *result = this->multiply(n);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
+}
+
 void Matrix4::rotateZ(double angle)
 {
-	// slide 43
-	m[0][0] = cos(angle);
-	m[0][1] = -sin(angle);
-	m[0][2] = 0;
-	m[0][3] = 0;
+	Matrix4 n = Matrix4(
+		cos(angle), -sin(angle), 0, 0, 
+		sin(angle), cos(angle), 0, 0, 
+		0, 0, 1, 0, 
+		0, 0, 0, 1
+	);
 
-	m[1][0] = sin(angle);
-	m[1][1] = cos(angle);
-	m[1][2] = 0;
-	m[1][3] = 0;
+	Matrix4 *result = n.multiply(*this);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
+}
 
-	m[2][0] = 0;
-	m[2][1] = 0;
-	m[2][2] = 1;
-	m[2][3] = 0;
+void Matrix4::rotateCubeZ(double angle)
+{
+	Matrix4 n = Matrix4(
+		cos(angle), -sin(angle), 0, 0, 
+		sin(angle), cos(angle), 0, 0, 
+		0, 0, 1, 0, 
+		0, 0, 0, 1
+	);
 
-	m[3][0] = 0;
-	m[3][1] = 0;
-	m[3][2] = 0;
-	m[3][3] = 1;
+	Matrix4 *result = this->multiply(n);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
 }
 
 void Matrix4::rotate(double angle, Vector3 &a)
@@ -262,8 +315,10 @@ void Matrix4::rotate(double angle, Vector3 &a)
 	*/
 }
 
+/*
 void Matrix4::scale(double a, double b, double c)
 {
+	
 	// slide 40
 	m[0][0] = a;
 	m[0][1] = 0;
@@ -286,29 +341,31 @@ void Matrix4::scale(double a, double b, double c)
 	m[3][3] = 1;
 
 }
+*/
+void Matrix4::scale(double a, double b, double c)
+{
+	Matrix4 n = Matrix4(
+		a, 0, 0, 0,
+		0, b, 0, 0,
+		0, 0, c, 0,
+		0, 0, 0, 1
+	);
+
+	Matrix4* result = this->multiply(n);
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			m[i][j] = result->get(i, j);
+		}
+	}
+}
 
 void Matrix4::translate(double a, double b, double c)
 {
-	// slide 38
-	m[0][0] = 1;
-	m[0][1] = 0;
-	m[0][2] = 0;
-	m[0][3] = a;
-
-	m[1][0] = 0;
-	m[1][1] = 1;
-	m[1][2] = 0;
-	m[1][3] = b;
-
-	m[2][0] = 0;
-	m[2][1] = 0;
-	m[2][2] = 1;
-	m[2][3] = c;
-
-	m[3][0] = 0;
-	m[3][1] = 0;
-	m[3][2] = 0;
-	m[3][3] = 1;
+	m[3][0] = a + m[3][0];
+	m[3][1] = b + m[3][1];
+	m[3][2] = c + m[3][2];
 }
 
 void Matrix4::print()
@@ -318,10 +375,13 @@ void Matrix4::print()
 	{
 		cout << setprecision(2) << fixed;
 
+		Matrix4 tpose = Matrix4(*this);
+		tpose.transpose();
+
 		cout << "[";
 		for (int j=0; j<4; j++)
 		{
-			cout << ("%f", this->m[i][j]);
+			cout << ("%f", tpose.m[i][j]);
 			if (j != 3)
 				cout << "\t";
 		}
@@ -333,19 +393,19 @@ void Matrix4::print()
 
 void Matrix4::transpose()
 {
-	double tmp[4][4];
+	double temp[4][4];
 	for (int i = 0; i < 4; ++i)
 	{
 		for (int j = 0; j < 4; ++j)
 		{
-			tmp[i][j] = m[j][i];
+			temp[i][j] = m[j][i];
 		}
 	}
 	for (int i = 0; i < 4; ++i)
 	{
 		for (int j = 0; j < 4; ++j)
 		{
-			m[i][j] = tmp[i][j];
+			m[i][j] = temp[i][j];
 		}
 	}
 

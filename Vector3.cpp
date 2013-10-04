@@ -55,18 +55,11 @@ float Vector3::getZ()
 	return z;
 }
 
-/*
-//											---> FIX THIS! <---
-float& Vector3::overload[](const int i)
+
+float Vector3::operator[](const int i)
 {
-	if (i == 0)
-		return this->x;
-	else if (i == 1)
-		return this->y;
-	else
-		return this->z;
+	return this->get(i);
 }
-*/
 
 void Vector3::add(Vector3 &a)
 {
@@ -159,7 +152,7 @@ void Vector3::normalize()
 void Vector3::print()
 {
 	cout << setprecision(2) << fixed;
-	cout << ("(%f, %f, %f)", this->x, this->y, this->z);
+	cout << "(" << this->x << ", " << this->y << ", " << this->z << ")\n";
 }
 
 string Vector3::toString()

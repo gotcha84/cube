@@ -93,7 +93,9 @@ float Vector4::getW()
 	return w;
 }
 
-// overload operator []
+float Vector4::operator[] (const int i) {
+	return this->get(i);
+}
 
 void Vector4::add(Vector4 &a) {
 	x+=a.x;
@@ -150,7 +152,7 @@ void Vector4::dehomogenize() {
 void Vector4::print()
 {
 	cout << setprecision(2) << fixed;
-	cout << ("(%f, %f, %f, %f)", this->w, this->x, this->y, this->z);
+	cout << "(" << this->x << ", " << this->y << ", " << this->z << ", " << this->w << ")\n";
 }
 
 string Vector4::toString() {

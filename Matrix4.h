@@ -32,17 +32,20 @@ class Matrix4
 		// create identity matrix
 		void identity();
 		// Multiply (matrix-times-matrix)
-		void multiply(Matrix4&);
+		Matrix4 *multiply(Matrix4&);
 		// Multiply (matrix-times-vector)
 		Vector4* multiply(Vector4&);
 	
 		// Make a rotation matrix about the x axis
 		void rotateX(double);
+		void rotateCubeX(double);
 		// given
 		// Make a rotation matrix about the y axis
 		void rotateY(double);
+		void rotateCubeY(double);
 		// Make a rotation matrix about the z axis
 		void rotateZ(double);
+		void rotateCubeZ(double);
 		// Make a rotation matrix about an arbitrary (unit) axis
 		void rotate(double, Vector3&);
 

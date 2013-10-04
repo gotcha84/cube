@@ -19,7 +19,7 @@ int Window::height = 512;   // set window height in pixels here
 // Callback method called when system is idle.
 void Window::idleCallback(void)
 {
-  cube.spin(spin_angle); // rotate cube; if it spins too fast try 0.001
+	cube.spin(spin_angle); // rotate cube; if it spins too fast try 0.001
   displayCallback(); // call display routine to re-draw cube
 }
 
@@ -124,9 +124,8 @@ void Cube::setAngle(double a)
 
 void Cube::spin(double deg)
 {
-  angle += deg;
-  if (angle > 360.0 || angle < -360.0) angle = 0.0;
-  matrix.rotateY(angle);
+  if (cube.angle > 360.0 || cube.angle < -360.0) cube.angle = 0.0;
+	cube.getMatrix().rotateCubeY(deg);
 }
 
 int main(int argc, char *argv[])
@@ -172,8 +171,14 @@ int main(int argc, char *argv[])
     
   // Initialize cube matrix:
   cube.getMatrix().identity();
-	cout << "initialized\n";
-	cube.getMatrix().print();
+	
+	cout << "initialized\t\t";
+	Vector3 pos = Vector3(
+		cube.getMatrix().m[3][0], 
+		cube.getMatrix().m[3][1], 
+		cube.getMatrix().m[3][2]
+	);
+	pos.print();
     
   glutMainLoop();
   return 0;
@@ -181,106 +186,128 @@ int main(int argc, char *argv[])
 
 void Window::processNormalKeys(unsigned char key, int x, int y)
 {
-	switch (key)
+	switch (key) 
 	{
 		case 'c':
 			// reverse the direction of the spin
 			spin_angle = -spin_angle;
 
-			cout << "reverse direction of spin\n";
-			cube.getMatrix().print();
+			cout << "reverse spin\t\t";
 			break;
 		case 'x':
 			// move cube left by a small amount
 			cube.getMatrix().translate(-1, 0, 0);
-
-			cout << "move left\n";
-			cube.getMatrix().print();
+			
+			cout << "move left\t\t";
 			break;
 		case 'X':
 			// move cube right by a small amount
 			cube.getMatrix().translate(1, 0, 0);
 
-			cout << "move right\n";
-			cube.getMatrix().print();
+			cout << "move right\t\t";
 			break;
 		case 'y':
 			// move cube down by a small amount
+			cube.getMatrix().translate(0, -1, 0);
+
+			cout << "move down\t\t";
 			break;
 		case 'Y':
 			// move cube up by a small amount
+			cube.getMatrix().translate(0, 1, 0);
+
+			cout << "move up\t\t\t";
 			break;
 		case 'z':
 			// move cube into of the screen by a small amount
+			cube.getMatrix().translate(0, 0, -1);
+
+			cout << "move in\t\t\t";
 			break;
 		case 'Z':
 			// move cube out of the screen by a small amount
+			cube.getMatrix().translate(0, 0, 1);
+
+			cout << "move out\t\t";
 			break;
 		case 'r':
 			// reset cube position and size to its initial position
 			cube.getMatrix().identity();
 			cube.setAngle(0);
 
-			cout << "reset\n";
-			cube.getMatrix().print();
+			cout << "reset\t\t";
 			break;
 		case 'a':
-			// rotate cube about the OpenGL window's z axis by a small number of degrees counterclockwise/clockwise.
+			// rotate cube about the OpenGL window's z axis by a small number of degrees counterclockwise
 			// The z axis crosses the screen in its center.
-			cube.getMatrix().rotateZ(1);
+			if (cube.angle > 360.0 || cube.angle < -360.0) cube.angle = 0.0;
+			cube.getMatrix().rotateZ(-100*spin_angle);
 
-			cout << "rotate about OpenGL window's z-axis\n";
-			cube.getMatrix().print();
+			cout << "rotate CW window z-axis\t";
+			break;
+		case 'A':
+			// rotate cube about the OpenGL window's z axis by a small number of degrees clockwise
+			// The z axis crosses the screen in its center.
+			if (cube.angle > 360.0 || cube.angle < -360.0) cube.angle = 0.0;
+			cube.getMatrix().rotateZ(100*spin_angle);
+
+			cout << "rotate CCW window z-axis";
 			break;
 		case 's':
 			// scale cube down (about its center, not the center of the screen)
 			cube.getMatrix().scale(
-				0.9*cube.getMatrix().get(0,0), 
-				0.9*cube.getMatrix().get(1,1), 
-				0.9*cube.getMatrix().get(2,2)
+				0.95, 
+				0.95, 
+				0.95
 			);
 
-			cout << "scale down\n";
-			cube.getMatrix().print();
+			cout << "scale down\t\t";
 			break;
 		case 'S':
 			// scale cube up (about its center, not the center of the screen)
 			cube.getMatrix().scale(
-				1.1*cube.getMatrix().get(0,0), 
-				1.1*cube.getMatrix().get(1,1), 
-				1.1*cube.getMatrix().get(2,2)
+				1.05, 
+				1.05, 
+				1.05
 			);
 
-			cout << "scale up\n";
-			cube.getMatrix().print();
+			cout << "scale up\t\t";
 			break;
 		case '1':
 			// change the color of the cube's faces to red
 			red = 2.0;
 			green = 0.0;
 			blue = 0.0;
-			cout << "color changed - RED\n";
+			cout << "color RED\t\t";
 			break;
 		case '2':
 			// change the color of the cube's faces to green
 			red = 0.0;
 			green = 2.0;
 			blue = 0.0;
-			cout << "color changed - GREEN\n";
+			cout << "color GREEN\t\t";
 			break;
 		case '3':
 			// change the color of the cube's faces to blue
 			red = 0.0;
 			green = 0.0;
 			blue = 2.0;
-			cout << "color changed - BLUE\n";
+			cout << "color BLUE\t\t";
 			break;
 		case '4':
 			// change the color of the cube's faces to yellow
 			red = 3.0;
 			green = 3.0;
 			blue = 0.0;
-			cout << "color changed - YELLOW\n";
+			cout << "color YELLOW\t\t";
 			break;
 	}
+
+	Vector3 pos = Vector3(
+		cube.getMatrix().m[3][0], 
+		cube.getMatrix().m[3][1], 
+		cube.getMatrix().m[3][2]
+	);
+
+	pos.print();
 }

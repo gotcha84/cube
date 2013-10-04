@@ -28,7 +28,7 @@ class Vector3 {
 		// get Z value
 		float getZ();
 		// overload [], i=0 -> x; i=1 -> y; i>=2 -> z
-		//float& overload[](const int i);				---> FIX THIS! <---
+		float operator[](const int i);
 
 		// {x+=a.x; y+=a.y; z+=a.z;}
 		void add(Vector3&);
