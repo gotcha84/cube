@@ -1,5 +1,4 @@
 CSE 167 - Introduction to Computer Graphics
-
 Project 1: cube
 ====
 
