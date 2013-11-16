@@ -16,4 +16,4 @@ Renders a spinning cube that can be translated, rotated, or scaled with the foll
 * 's'/'S': scale cube down/up (about its center, not the center of the screen). To scale up means to make it bigger
 * '1','2','3','4': change the color of the cube's faces to red, green, blue, or yellow, respectively
 
-![initial state](cube.png)
+![rotating green cube](cube.png "rotating green cube")
