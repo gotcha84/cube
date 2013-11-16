@@ -15,3 +15,5 @@ Renders a spinning cube that can be translated, rotated, or scaled with the foll
 * 'a'/'A': rotate cube about the OpenGL window's z axis by a small number of degrees (e.g., 10) per key press, counterclockwise ('a') or clockwise ('A'). The z axis crosses the screen in the center of the OpenGL window. This rotation should not affect the spin other than that it will rotate the spin axis with the cube.
 * 's'/'S': scale cube down/up (about its center, not the center of the screen). To scale up means to make it bigger
 * '1','2','3','4': change the color of the cube's faces to red, green, blue, or yellow, respectively
+
+![initial state](cube.png)
